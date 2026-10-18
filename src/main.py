@@ -4,5 +4,5 @@ app = FastAPI()
 
 
 @app.get('/')
-def health():
+async def health():
     return {'message': 'Hello, World!'}
