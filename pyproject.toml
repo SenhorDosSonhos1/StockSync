@@ -9,6 +9,8 @@ readme = "README.md"
 requires-python = ">=3.13,<4.0"
 dependencies = [
     "fastapi[standard] (>=0.143.3,<0.144.0)",
+    "asyncpg (>=0.32.0,<0.33.0)",
+    "sqlalchemy[asyncio] (>=2.1.6,<3.0.0)",
 ]
 
 
@@ -21,7 +23,8 @@ dev = [
     "taskipy (>=1.14.1,<2.0.0)",
     "ruff (>=0.17.1,<0.18.0)",
     "pytest (>=9.1.1,<10.0.0)",
-    "pytest-cov (>=7.1.0,<8.0.0)"
+    "pytest-cov (>=7.1.0,<8.0.0)",
+    "pytest-asyncio (>=1.4.1,<2.0.0)"
 ]
 
 [tool.ruff]
@@ -39,6 +42,10 @@ quote-style = "single"
 lint = "ruff check . --diff"
 format = "ruff check . --fix && ruff format ."
 pre_test = "ruff check . --fix && ruff format ."
-test = "pytest -vv --cov=stocksync --cov-report term-missing -p no:warnings ."
+test = "pytest -vv --cov=stocksync --cov-report term-missing -p no:warnings . "
 post_test = "coverage html"
 dev = "uvicorn src.main:app --reload"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
